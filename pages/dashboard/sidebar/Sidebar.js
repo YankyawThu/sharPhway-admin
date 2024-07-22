@@ -27,7 +27,7 @@ export function Sidebar(props) {
         <SidebarHeader />
         <SidebarItems />
       </div>
-      <div className='text-center text-white font-semibold mb-5'><button onClick={signOut} className='p-2'>Sign Out</button></div>
+      <div className='text-left text-white font-semibold mb-5'><button onClick={signOut} className='p-2'>Sign Out</button></div>
     </aside>
   );
 }

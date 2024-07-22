@@ -27,20 +27,18 @@ export default function Signin({csrfToken}) {
     return (
         <div className="h-screen flex flex-col items-center justify-center bg-[#efefef] text-black">
             <div className="bg-[#ffff] w-96 p-7">
-                <div className="text-center mb-7 text-lg">ADMIN PANEL</div>
+                <div className="text-center text-lg">ADMIN PANEL</div>
                 <form method="post" onSubmit={handleSignIn}>
                     <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-                    <div>
+                    <div className="my-5">
                         <div className="text-gray-400">Email</div>
-                        <input name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="block focus:outline-none bg-transparent pb-1 w-full" />
+                        <input name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-[#E9B44C] rounded-lg" />
                     </div>
-                    <div className="bg-[#E9B44C] h-[2px] rounded-full mb-7"></div>
-                    <div>
+                    <div className="my-5">
                         <div className="text-gray-400">Password</div>
-                        <input name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="block focus:outline-none bg-transparent pb-1 w-full" />
+                        <input name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-[#E9B44C] rounded-lg" />
                     </div>
-                    <div className="bg-[#E9B44C] h-[2px] rounded-full mb-10"></div>
-                    <div className=""><button type="submit" className="p-2 pl-0 pb-0 text-[#9B2915]">SIGN IN</button></div>
+                    <div className=""><button type="submit" className="p-3 mt-5 w-full rounded-lg text-[#9B2915] bg-[#E9B44C]">Sign In</button></div>
                 </form>
             </div>
         </div>
