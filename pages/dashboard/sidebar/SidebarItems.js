@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { data } from './data';
+import { useRouter } from 'next/router';
 
 const style = {
   title: 'font-normal mx-4 text-sm',
@@ -11,7 +11,9 @@ const style = {
 };
 
 export function SidebarItems() {
-  const pathname = usePathname();
+  const router = useRouter();
+  const pathSegments = router.pathname.split('/').filter(segment => segment);
+  const startPath = pathSegments.length > 0 ? `/${pathSegments[0]}` : '/';
   return (
     <ul>
       {data.map((item) => (
@@ -19,7 +21,7 @@ export function SidebarItems() {
           <Link href={item.link}>
             <span
               className={`${style.link} 
-              ${item.link === pathname && style.active}`}
+              ${item.link === startPath && style.active}`}
             >
               <span>{item.icon}</span>
               <span className={style.title}>{item.title}</span>

@@ -53,6 +53,25 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Exchange {
+  id          String    @id @default(cuid())
+  currency    String
+  description String?
+  min         Float
+  max         Float
+  baseAmount  String    @map("base_amount")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model News {
+  id          String    @id @default(cuid())
+  title       String
+  content     String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 enum Role {
   user
   admin

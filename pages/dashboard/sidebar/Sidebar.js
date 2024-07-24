@@ -3,6 +3,7 @@ import { SidebarItems } from './SidebarItems';
 import { SidebarHeader } from './SidebarHeader';
 import { useDashboardContext } from '../Provider';
 import { signOut } from "next-auth/react"
+import { IoMdLogOut } from "react-icons/io";
 
 const style = {
   mobileOrientation: {
@@ -27,7 +28,7 @@ export function Sidebar(props) {
         <SidebarHeader />
         <SidebarItems />
       </div>
-      <div className='text-left text-white font-semibold mb-5'><button onClick={signOut} className='p-2'>Sign Out</button></div>
+      <div className='text-left text-white font-semibold mb-5 pl-2'><button onClick={signOut} className='inline-flex items-center p-2 gap-1'><IoMdLogOut className="text-xl mr-2" />Sign Out</button></div>
     </aside>
   );
 }

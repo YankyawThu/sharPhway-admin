@@ -1,36 +1,32 @@
-import { DocIcon } from './icons/DocIcon';
-import { HomeIcon } from './icons/HomeIcon';
-import { TaskIcon } from './icons/TaskIcon';
-import { ReportIcon } from './icons/ReportIcon';
-import { ProjectIcon } from './icons/ProjectIcon';
-import { SettingsIcon } from './icons/SettingsIcon';
-import { CalendarIcon } from './icons/CalendarIcon';
-import { TimeManageIcon } from './icons/TimeManageIcon';
+import { FaInbox } from "react-icons/fa";
+import { SiHappycow } from "react-icons/si";
+import { GiNewspaper, GiTakeMyMoney } from "react-icons/gi";
+import { LuLayoutDashboard } from "react-icons/lu";
 
 export const data = [
   {
     title: 'Dashboard',
-    icon: <HomeIcon />,
+    icon: <LuLayoutDashboard className="text-lg" />,
     link: '/',
   },
   {
     title: 'Exchange',
-    icon: <HomeIcon />,
+    icon: <GiTakeMyMoney className="text-lg" />,
     link: '/exchange',
   },
   {
     title: 'News',
-    icon: <HomeIcon />,
+    icon: <GiNewspaper className="text-lg" />,
     link: '/news',
   },
   {
     title: 'FYI',
-    icon: <HomeIcon />,
+    icon: <SiHappycow className="text-lg" />,
     link: '/fyi',
   },
   {
-    title: 'Mail Box',
-    icon: <HomeIcon />,
+    title: 'Mail',
+    icon: <FaInbox className="text-lg" />,
     link: '/mailBox',
   },
 ];
