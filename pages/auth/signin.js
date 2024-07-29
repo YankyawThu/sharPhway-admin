@@ -6,11 +6,11 @@ export async function getServerSideProps(context) {
     const csrfToken = await getCsrfToken(context)
     // const providers = await getProviders()
     return {
-        props: { csrfToken }
+        props: { csrfToken: csrfToken || null }
     }
 }
 
-export default function Signin({csrfToken}) {
+export default function Signin({csrfToken = null}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()

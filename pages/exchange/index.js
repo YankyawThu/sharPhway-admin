@@ -32,10 +32,10 @@ export default function Index() {
                 const response = await fetch(`/api/exchange/${id}`, {
                     method: 'DELETE'
                 })
-                if (!response.ok) {
-                    throw new Error('Network response was not ok')
-                }
                 const data = await response.json()
+                if (!response.ok) {
+                    alert(data.msg)
+                }
                 fetchData()
                 alert(data.msg)
             } catch (error) {
@@ -45,9 +45,9 @@ export default function Index() {
     }
 
     return (
-        <div className='mt-3'>
+        <div>
             <Link href="/exchange/add" className="inline-flex items-center p-2 bg-green-50 border-[1px] border-green-500 text-green-500 rounded-lg"><FiPlus className="text-lg mr-1" />Add</Link>
-            <table className="w-full leading-normal mt-5">
+            <table className="w-full leading-normal mt-2">
                 <thead>
                     <tr>
                         <th

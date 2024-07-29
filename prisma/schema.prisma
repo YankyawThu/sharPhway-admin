@@ -67,6 +67,11 @@ model Exchange {
 model News {
   id          String    @id @default(cuid())
   title       String
+  img1        String?
+  img2        String?
+  img3        String?
+  img4        String?
+  img5        String?
   content     String    @db.Text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

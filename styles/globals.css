@@ -16,6 +16,11 @@
   }
 } */
 
+:root {
+  --ck-border-radius: .5rem !important;
+  /* --ck-color-base-border: #4b5563 !important; */
+}
+
 body {
   /* color: rgb(var(--foreground-rgb)); */
   /* background: linear-gradient(
