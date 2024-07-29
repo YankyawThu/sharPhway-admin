@@ -32,7 +32,7 @@ export default function Edit() {
         } catch (error) {
             setError('Error fetching data')
         } finally {
-            setLoading(false)
+            // setLoading(false)
         }
     }
 

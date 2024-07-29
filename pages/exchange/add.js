@@ -1,32 +1,29 @@
 import { useState } from "react"
 import { useRouter } from 'next/router'
+import { saveExchange } from '@/lib/api/exchange'
 
 export default function Add() {
-    const [exchange, setExchange] = useState('')
+    const [exchange, setExchange] = useState({
+        currency: '',
+        description: '',
+        min: '',
+        max: '',
+        baseAmount: ''
+    })
+    const [error, setError] = useState(null)
 
     const router = useRouter()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-    
-        const response = await fetch('/api/exchange', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                currency: exchange.currency,
-                description: exchange.description,
-                min: parseFloat(exchange.min),
-                max: parseFloat(exchange.max),
-                baseAmount: exchange.baseAmount
-            })
-        })
-
-        if(response.ok) {
-            const data = await response.json()
+        try {
+            const data = await saveExchange(exchange)
             alert(data.msg)
             router.push('/exchange')
+        } catch (error) {
+            setError('Error fetching data')
+        } finally {
+            // setLoading(false)
         }
     }
 
@@ -56,6 +53,10 @@ export default function Add() {
     }
 
     return (
+        <>
+        {error ? (
+            <p>{error}</p>
+        ) : (
         <div className="bg-white w-96 py-3 p-7 rounded-lg">
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="my-3">
@@ -84,5 +85,7 @@ export default function Add() {
                 </div>
             </form>
         </div>
+        )}
+        </>
     )
 }
