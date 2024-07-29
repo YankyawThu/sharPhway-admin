@@ -17,30 +17,30 @@ export default async function handler(req, res) {
                 return res.status(404).json({ msg: 'Not found' })
             }
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
     } else if (req.method === 'PUT') {
         try{
             await prisma.$connect()
-            const { title, content, imgsArray } = req.body
-            const data = await prisma.news.update({
+            const { title, content, imgs } = req.body
+            await prisma.news.update({
                 data: {
                     title,
                     content,
-                    img1: imgsArray[0] ? imgsArray[0].img : null,
-                    img2: imgsArray[1] ? imgsArray[1].img : null,
-                    img3: imgsArray[2] ? imgsArray[2].img : null,
-                    img4: imgsArray[3] ? imgsArray[3].img : null,
-                    img5: imgsArray[4] ? imgsArray[4].img : null,
+                    img1: imgs[0] ? imgs[0].img : null,
+                    img2: imgs[1] ? imgs[1].img : null,
+                    img3: imgs[2] ? imgs[2].img : null,
+                    img4: imgs[3] ? imgs[3].img : null,
+                    img5: imgs[4] ? imgs[4].img : null,
                 },
                 where: {
                     id
                 }
             })
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
                 where: { id },
             })
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }

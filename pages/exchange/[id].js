@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { getExchange, updateExchange } from '@/lib/api/exchange'
 
 export default function Edit() {
-    const [exchange, setExchange] = useState('')
+    const [exchange, setExchange] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     
@@ -30,7 +30,7 @@ export default function Edit() {
             alert(data.msg)
             router.push('/exchange')
         } catch (error) {
-            setError('Error fetching data')
+            setError('Error updating data')
         } finally {
             // setLoading(false)
         }

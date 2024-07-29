@@ -21,7 +21,7 @@ export default function Add() {
             alert(data.msg)
             router.push('/exchange')
         } catch (error) {
-            setError('Error fetching data')
+            setError('Error saving data')
         } finally {
             // setLoading(false)
         }

@@ -3,87 +3,82 @@ import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { TiDelete } from "react-icons/ti"
+import { saveNews } from '@/lib/api/news'
 
 const CustomEditor = dynamic( () => import( '@/components/editor' ), { ssr: false } )
 
 export default function Add() {
-    const [title, setTitle] = useState('')
-    const [img, setImg] = useState([])
-    const [content, setContent] = useState('')
+    const [news, setNews] = useState({
+        title: '',
+        content: '',
+        img: []
+    })
+    const [error, setError] = useState(null)
     const maxFiles = 5
 
     const router = useRouter()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const formData = new FormData()
-        Array.from(img).forEach(item => {
-            formData.append('file', item.img)
-        })
-        const response = await fetch('/api/googleDrive', {
-            method: 'POST',
-            body: formData
-        })
-        const imgUrls = await response.json()
-        if(!response.ok) {
+        try {
+            const data = await saveNews(news)
             alert(data.msg)
-        }
-        else {
-            const response = await fetch('/api/news', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title,
-                    content,
-                    imgUrls
-                })
-            })
-            const data = await response.json()
-            if(response.ok) {
-                alert(data.msg)
-                router.push('/news')
-            }
-            else alert(data.msg)
-        }
-    }
-
-    const handleFileChange = async (event) => {
-        event.preventDefault()
-
-        const file = event.target.files[0]
-        if (file) {
-            // files.map(file => {
-                const reader = new FileReader()
-                reader.onloadend = () => {
-                    setImg(prevstate => [...prevstate, {preview: reader.result, img: file}])
-                }
-                reader.readAsDataURL(file)
-            // })
+            router.push('/news')
+        } catch (error) {
+            setError('Error saving data')
+        } finally {
+            // setLoading(false)
         }
     }
 
     const handleFileDelete = (key) => {
-        const array = [...img]
+        const array = [...news.img]
         const newArray = array.filter((_, index) => index !== key)
-        setImg([...newArray])
+        setNews({...news, img: newArray})
+    }
+
+    const handleFileChange = async (event) => {
+        event.preventDefault()
+        const file = event.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const img = [...news.img, {preview: reader.result, img: file}]
+                const data = {...news, img}
+                setNews(data)
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleTitle = val => {
+        const data = {...news, title: val}
+        setNews(data)
+    }
+
+    const handleContent = val => {
+        const data = {...news, content: val}
+        setNews(data)
     }
 
     return (
+        <>
+        {error ? (
+            <p>{error}</p>
+        ) : (
         <div className="bg-white py-3 p-7 rounded-lg">
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="my-3">
                     <div className="text-gray-400">Images (Not more than 5 images)</div>
                     <div className="flex flex-row gap-5 my-2">
-                        {img?.map((item, key) => (
+                        {news.img?.map((item, key) => (
                             <div key={key} className="relative p-5 rounded-lg border-[1px] border-gray-500">
                                 <TiDelete onClick={() => handleFileDelete(key)} className="absolute text-[30px] text-red-700 -top-3 -right-3 bg-white cursor-pointer" />
                                 <Image src={item.preview} width="130" height="130" alt="image" className="w-[130px] h-[130px]" />
                             </div>
                         ))}
                     </div>
-                    {img.length <= maxFiles-1 ?
+                    {news.img.length <= maxFiles-1 ?
                     <input name="image" type="file" onChange={handleFileChange} accept="image/*" className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg"/>
                     :
                     ''
@@ -91,11 +86,11 @@ export default function Add() {
                 </div>
                 <div className="my-3">
                     <div className="text-gray-400">Title</div>
-                    <input name="title" placeholder="eg., ထိုင်းမလေးတွေကိုချစ်တဲ့အကြောင်း နေ့တိိုင်းသတင်းလုပ်ပြီးရေးမယ်" type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
+                    <input name="title" placeholder="eg., ထိုင်းမလေးတွေကိုချစ်တဲ့အကြောင်း နေ့တိိုင်းသတင်းလုပ်ပြီးရေးမယ်" type="text" value={news.title} onChange={(e) => handleTitle(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
                 </div>
                 <div className="my-3">
                     <div className="text-gray-400">Content</div>
-                    <CustomEditor text={content} setText={setContent} />
+                    <CustomEditor text={news.content} setText={handleContent} />
                 </div>
                 
                 <div className="mt-7 mb-3">
@@ -104,5 +99,7 @@ export default function Add() {
                 </div>
             </form>
         </div>
+        )}
+        </>
     )
 }
