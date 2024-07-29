@@ -17,7 +17,7 @@ export default async function handler(req, res) {
                 return res.status(404).json({ msg: 'Not found' })
             }
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         try{
             await prisma.$connect()
             const { currency, description, min, max, baseAmount } = req.body
-            const data = await prisma.exchange.update({
+            await prisma.exchange.update({
                 data: {
                     currency,
                     description,
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                 }
             })
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
                 where: { id },
             })
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }

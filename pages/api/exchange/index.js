@@ -9,7 +9,7 @@ export default async function handler(req, res) {
             const data = await prisma.exchange.findMany({orderBy: {updatedAt: 'desc'}})
             return res.status(200).json(data)
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         try {
             await prisma.$connect()
             const { currency, description, min, max, baseAmount } = req.body
-            const data = await prisma.exchange.create({
+            await prisma.exchange.create({
                 data: {
                     currency,
                     description,
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
                 },
             })
         } catch (error) {
-            return res.status(500).json({ msg: error })
+            return res.status(500).json({ msg: 'Database error' })
         } finally {
             await prisma.$disconnect()
         }
