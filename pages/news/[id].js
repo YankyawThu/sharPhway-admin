@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { TiDelete } from "react-icons/ti"
 import { getNews, updateNews } from '@/lib/api/news'
+import { MAX_FILES } from '@/lib/config/const'
 
 const CustomEditor = dynamic( () => import( '@/components/editor' ), { ssr: false } )
 
@@ -11,7 +12,6 @@ export default function Edit() {
     const [news, setNews] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const maxFiles = 5
     const router = useRouter()
     
     useEffect(() => {
@@ -97,7 +97,7 @@ export default function Edit() {
                             </div>
                         ))}
                     </div>
-                    {news.img.length <= maxFiles-1 ?
+                    {news.img.length <= MAX_FILES-1 ?
                     <input name="image" type="file" onChange={handleFileChange} accept="image/*" className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg"/>
                     :
                     ''

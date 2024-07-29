@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import moment from 'moment'
 import { FiPlus } from "react-icons/fi"
 import { fetchExchanges, deleteExchange } from '@/lib/api/exchange'
+import { timeDiffFromDate } from '@/lib/utils/helper'
 
 export default function Index() {
     const [exchanges, setExchanges] = useState([])
@@ -96,7 +96,7 @@ export default function Index() {
                                 <td className="pl-5 py-5 text-gray-600">{item.min}</td>
                                 <td className="pl-5 py-5 text-gray-600">{item.max}</td>
                                 <td className="pl-5 py-5 text-gray-600">{item.baseAmount}</td>
-                                <td className="pl-5 py-5 text-gray-400">{(moment(item.updatedAt).fromNow())}</td>
+                                <td className="pl-5 py-5 text-gray-400">{timeDiffFromDate(item.updatedAt)}</td>
                                 <td className="">
                                     <div className="flex self-center gap-1">
                                         <Link href={`/exchange/${item.id}`} className="p-2 bg-blue-50 border-[1px] border-blue-500 text-blue-500 rounded-lg text-xs">Edit</Link>
