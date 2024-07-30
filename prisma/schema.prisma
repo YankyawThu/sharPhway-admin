@@ -77,6 +77,14 @@ model News {
   updatedAt   DateTime  @updatedAt
 }
 
+model Fyi {
+  id          String    @id @default(cuid())
+  title       String
+  content     String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 enum Role {
   user
   admin
