@@ -12,14 +12,12 @@ export default NextAuth({
         CredentialsProvider({
             name: 'Credentials',
             async authorize(credentials, req) {
-
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
                   })
-                if (user && await compare(credentials.password, user.password)) {
+                if (user && user.role == 'admin' && await compare(credentials.password, user.password)) {
                     return user
                 }
-          
                 return null
             }
         }),
