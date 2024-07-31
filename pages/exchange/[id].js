@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import { getExchange, updateExchange } from '@/lib/api/exchange'
+import { useShowErrorContext } from '@/lib/context/showErrorProvider'
+import Loading from '@/components/loading'
 
 export default function Edit() {
     const [exchange, setExchange] = useState({})
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const {loading, isLoading, isError} = useShowErrorContext()
     
     const router = useRouter()
 
@@ -15,9 +16,9 @@ export default function Edit() {
                 const data = await getExchange(router.query.id)
                 setExchange(data)
             } catch (error) {
-                setError('Error fetching data')
+                isError('Error fetching datasadad')
             } finally {
-                setLoading(false)
+                isLoading(false)
             }
         }
         loadData()
@@ -30,9 +31,9 @@ export default function Edit() {
             alert(data.msg)
             router.push('/exchange')
         } catch (error) {
-            setError('Error updating data')
+            isError('Error updating data')
         } finally {
-            // setLoading(false)
+            // isLoading(false)
         }
     }
 
@@ -64,10 +65,8 @@ export default function Edit() {
     return (
         <>
         {loading ? (
-            <p>Loading...</p>
-        ) : error ? (
-            <p>{error}</p>
-        ) : (
+            <Loading />
+        ) : <>
             <div className="bg-white w-96 py-3 p-7 rounded-lg">
                 <form method="POST" onSubmit={handleSubmit}>
                     <div className="my-3">
@@ -96,7 +95,8 @@ export default function Edit() {
                     </div>
                 </form>
             </div>
-        )}
+            </>
+        }
         </>
     )
 }

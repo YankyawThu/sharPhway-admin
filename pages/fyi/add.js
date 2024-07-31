@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import { saveFyi } from '@/lib/api/fyi'
+import { useShowErrorContext } from '@/lib/context/showErrorProvider'
+import Loading from '@/components/loading'
 
 const CustomEditor = dynamic( () => import( '@/components/editor' ), { ssr: false } )
 
@@ -10,7 +12,7 @@ export default function Add() {
         title: '',
         content: ''
     })
-    const [error, setError] = useState(null)
+    const {loading, isLoading, isError} = useShowErrorContext()
 
     const router = useRouter()
 
@@ -21,9 +23,9 @@ export default function Add() {
             alert(data.msg)
             router.push('/fyi')
         } catch (error) {
-            setError('Error saving data')
+            isError('Error saving data')
         } finally {
-            // setLoading(false)
+            // isLoading(false)
         }
     }
 
@@ -39,9 +41,6 @@ export default function Add() {
 
     return (
         <>
-        {error ? (
-            <p>{error}</p>
-        ) : (
         <div className="bg-white py-3 p-7 rounded-lg">
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="my-3">
@@ -59,7 +58,6 @@ export default function Add() {
                 </div>
             </form>
         </div>
-        )}
         </>
     )
 }

@@ -1,7 +1,7 @@
 import css from '../style.module.css';
 import { SidebarItems } from './SidebarItems';
 import { SidebarHeader } from './SidebarHeader';
-import { useDashboardContext } from '../Provider';
+import { useDashboardContext } from '../../../lib/context/dashboardProvider';
 import { signOut } from "next-auth/react"
 import { IoMdLogOut } from "react-icons/io";
 

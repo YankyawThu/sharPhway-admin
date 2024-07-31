@@ -2,13 +2,15 @@ import { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import { getFyi, updateFyi } from '@/lib/api/fyi'
+import { useShowErrorContext } from '@/lib/context/showErrorProvider'
+import Loading from '@/components/loading'
 
 const CustomEditor = dynamic( () => import( '@/components/editor' ), { ssr: false } )
 
 export default function Edit() {
     const [fyi, setFyi] = useState({})
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const {loading, isLoading, isError} = useShowErrorContext()
+
     const router = useRouter()
     
     useEffect(() => {
@@ -17,9 +19,9 @@ export default function Edit() {
                 const data = await getFyi(router.query.id)
                 setFyi(data)
             } catch (error) {
-                setError('Error fetching data')
+                isError('Error fetching data')
             } finally {
-                setLoading(false)
+                isLoading(false)
             }
         }
         loadData()
@@ -32,9 +34,9 @@ export default function Edit() {
             alert(data.msg)
             router.push('/fyi')
         } catch (error) {
-            setError('Error updating data')
+            isError('Error updating data')
         } finally {
-            // setLoading(false)
+            // isLoading(false)
         }
     }
 
@@ -51,28 +53,27 @@ export default function Edit() {
     return (
         <>
         {loading ? (
-            <p>Loading...</p>
-        ) : error ? (
-            <p>{error}</p>
-        ) : (
-        <div className="bg-white py-3 p-7 rounded-lg">
-            <form method="POST" onSubmit={handleSubmit}>
-                <div className="my-3">
-                    <div className="text-gray-400">Title</div>
-                    <input name="title" placeholder="eg., ထိုင်းမလေးတွေကိုချစ်တဲ့အကြောင်း နေ့တိိုင်းသတင်းလုပ်ပြီးရေးမယ်" type="text" value={fyi.title} onChange={(e) => handleTitle(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
-                </div>
-                <div className="my-3">
-                    <div className="text-gray-400">Content</div>
-                    <CustomEditor text={fyi.content} setText={handleContent} />
-                </div>
-                
-                <div className="mt-7 mb-3">
-                    <button type="submit" className="bg-blue-50 border-[1px] border-blue-500 text-blue-500 py-2 px-3 rounded-lg mr-1">Submit</button>
-                    <button type="button" onClick={() => router.push('/fyi')} className="bg-yellow-50 border-[1px] border-yellow-600 text-yellow-600 py-2 px-3 rounded-lg">Cancel</button>
-                </div>
-            </form>
-        </div>
-        )}
+            <Loading />
+        ) : <>
+            <div className="bg-white py-3 p-7 rounded-lg">
+                <form method="POST" onSubmit={handleSubmit}>
+                    <div className="my-3">
+                        <div className="text-gray-400">Title</div>
+                        <input name="title" placeholder="eg., ထိုင်းမလေးတွေကိုချစ်တဲ့အကြောင်း နေ့တိိုင်းသတင်းလုပ်ပြီးရေးမယ်" type="text" value={fyi.title} onChange={(e) => handleTitle(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
+                    </div>
+                    <div className="my-3">
+                        <div className="text-gray-400">Content</div>
+                        <CustomEditor text={fyi.content} setText={handleContent} />
+                    </div>
+                    
+                    <div className="mt-7 mb-3">
+                        <button type="submit" className="bg-blue-50 border-[1px] border-blue-500 text-blue-500 py-2 px-3 rounded-lg mr-1">Submit</button>
+                        <button type="button" onClick={() => router.push('/fyi')} className="bg-yellow-50 border-[1px] border-yellow-600 text-yellow-600 py-2 px-3 rounded-lg">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            </>
+        }
         </>
     )
 }

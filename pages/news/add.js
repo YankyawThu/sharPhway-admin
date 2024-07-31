@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { TiDelete } from "react-icons/ti"
 import { saveNews } from '@/lib/api/news'
 import { MAX_FILES } from '@/lib/config/const'
+import { useShowErrorContext } from '@/lib/context/showErrorProvider'
+import Loading from '@/components/loading'
 
 const CustomEditor = dynamic( () => import( '@/components/editor' ), { ssr: false } )
 
@@ -14,7 +16,7 @@ export default function Add() {
         content: '',
         img: []
     })
-    const [error, setError] = useState(null)
+    const {loading, isLoading, isError} = useShowErrorContext()
 
     const router = useRouter()
 
@@ -25,9 +27,9 @@ export default function Add() {
             alert(data.msg)
             router.push('/news')
         } catch (error) {
-            setError('Error saving data')
+            isError('Error saving data')
         } finally {
-            // setLoading(false)
+            // isLoading(false)
         }
     }
 
@@ -63,9 +65,6 @@ export default function Add() {
 
     return (
         <>
-        {error ? (
-            <p>{error}</p>
-        ) : (
         <div className="bg-white py-3 p-7 rounded-lg">
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="my-3">
@@ -99,7 +98,6 @@ export default function Add() {
                 </div>
             </form>
         </div>
-        )}
         </>
     )
 }

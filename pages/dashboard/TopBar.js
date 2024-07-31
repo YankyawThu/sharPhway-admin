@@ -1,4 +1,4 @@
-import { useDashboardContext } from './Provider';
+import { useDashboardContext } from '../../lib/context/dashboardProvider';
 
 export function TopBar() {
   const { toggleSidebar } = useDashboardContext();

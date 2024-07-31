@@ -1,9 +1,10 @@
-'use client';
 import React from 'react';
 import { TopBar } from './TopBar';
 import { Overlay } from './Overlay';
 import { Sidebar } from './sidebar/Sidebar';
-import { DashboardProvider, useDashboardContext } from './Provider';
+import { DashboardProvider, useDashboardContext } from '../../lib/context/dashboardProvider';
+import { ShowErrorProvider, useShowErrorContext } from '@/lib/context/showErrorProvider';
+import Error from '@/components/error'
 
 const style = {
   open: 'lg:w-full',
@@ -15,6 +16,8 @@ const style = {
 
 function Content(props) {
   const { isOpen } = useDashboardContext();
+  const {error} = useShowErrorContext()
+
   return (
     <div className={style.container}>
       <div className="flex items-start">
@@ -25,7 +28,15 @@ function Content(props) {
              ${isOpen ? style.open : style.close}`}
         >
           <TopBar />
-          <main className={style.main}>{props.children}</main>
+          <main className={style.main}>
+            {error ? (
+                <Error>{error}</Error>
+            ) : (
+            <>
+              {props.children}
+            </>
+            )}
+          </main>
         </div>
       </div>
     </div>
@@ -35,7 +46,11 @@ function Content(props) {
 export function DashboardLayout(props) {
   return (
     <DashboardProvider>
-      <Content>{props.children}</Content>
+      <ShowErrorProvider>
+        <Content>
+          {props.children}
+        </Content>
+      </ShowErrorProvider>
     </DashboardProvider>
   );
 }

@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useRouter } from 'next/router'
 import { saveExchange } from '@/lib/api/exchange'
+import { useShowErrorContext } from '@/lib/context/showErrorProvider'
+import Loading from '@/components/loading'
 
 export default function Add() {
     const [exchange, setExchange] = useState({
@@ -10,7 +12,7 @@ export default function Add() {
         sell: '',
         baseAmount: ''
     })
-    const [error, setError] = useState(null)
+    const {loading, isLoading, isError} = useShowErrorContext()
 
     const router = useRouter()
 
@@ -21,9 +23,9 @@ export default function Add() {
             alert(data.msg)
             router.push('/exchange')
         } catch (error) {
-            setError('Error saving data')
+            isError('Error saving data')
         } finally {
-            // setLoading(false)
+            // isLoading(false)
         }
     }
 
@@ -54,9 +56,6 @@ export default function Add() {
 
     return (
         <>
-        {error ? (
-            <p>{error}</p>
-        ) : (
         <div className="bg-white w-96 py-3 p-7 rounded-lg">
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="my-3">
@@ -85,7 +84,6 @@ export default function Add() {
                 </div>
             </form>
         </div>
-        )}
         </>
     )
 }

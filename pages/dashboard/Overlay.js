@@ -1,4 +1,4 @@
-import { useDashboardContext } from './Provider';
+import { useDashboardContext } from '../../lib/context/dashboardProvider';
 
 // The overlay will only be visible on small screens to emphasize the focus on Sidebar when it is open.
 export function Overlay() {
