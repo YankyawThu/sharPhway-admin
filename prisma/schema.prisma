@@ -57,8 +57,8 @@ model Exchange {
   id          String    @id @default(cuid())
   currency    String
   description String?
-  min         Float
-  max         Float
+  buy         Float     @default(0.00)
+  sell        Float     @default(0.00)
   baseAmount  String    @map("base_amount")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

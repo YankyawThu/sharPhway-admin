@@ -61,13 +61,13 @@ export default function Index() {
                                 scope="col"
                                 className="border-b border-gray-200 bg-white py-3 pl-5 text-left text-gray-400 font-thin text-sm"
                             >
-                                Min
+                                Buy
                             </th>
                             <th
                                 scope="col"
                                 className="border-b border-gray-200 bg-white py-3 pl-5 text-left text-gray-400 font-thin text-sm"
                             >
-                                Max
+                                Sell
                             </th>
                             <th
                                 scope="col"
@@ -93,8 +93,8 @@ export default function Index() {
                             <tr key={item.id} className="bg-white">
                                 <td className="pl-5 py-5 text-gray-600">{item.currency}</td>
                                 <td className="pl-5 py-5 text-gray-600">{item.description}</td>
-                                <td className="pl-5 py-5 text-gray-600">{item.min}</td>
-                                <td className="pl-5 py-5 text-gray-600">{item.max}</td>
+                                <td className="pl-5 py-5 text-gray-600">{item.buy}</td>
+                                <td className="pl-5 py-5 text-gray-600">{item.sell}</td>
                                 <td className="pl-5 py-5 text-gray-600">{item.baseAmount}</td>
                                 <td className="pl-5 py-5 text-gray-400">{timeDiffFromDate(item.updatedAt)}</td>
                                 <td className="">

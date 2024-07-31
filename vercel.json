@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/api/cron/bahtRate",
+            "schedule": "*/5 9 * * *"
+        }
+    ]
+}

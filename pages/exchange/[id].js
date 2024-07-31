@@ -46,13 +46,13 @@ export default function Edit() {
         setExchange(data)
     }
 
-    const handleMin = val => {
-        const data = {...exchange, min: val}
+    const handleBuy = val => {
+        const data = {...exchange, buy: val}
         setExchange(data)
     }
 
-    const handleMax = val => {
-        const data = {...exchange, max: val}
+    const handleSell = val => {
+        const data = {...exchange, sell: val}
         setExchange(data)
     }
 
@@ -79,12 +79,12 @@ export default function Edit() {
                         <input name="description" type="text" value={exchange.description} onChange={(e) => handleDescription(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" />
                     </div>
                     <div className="my-3">
-                        <div className="text-gray-400">Min</div>
-                        <input name="min" type="text" value={exchange.min} onChange={(e) => handleMin(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required />
+                        <div className="text-gray-400">Buy</div>
+                        <input name="buy" type="text" value={exchange.buy} onChange={(e) => handleBuy(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required />
                     </div>
                     <div className="my-3">
-                        <div className="text-gray-400">Max</div>
-                        <input name="max" type="text" value={exchange.max} onChange={(e) => handleMax(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required />
+                        <div className="text-gray-400">Sell</div>
+                        <input name="sell" type="text" value={exchange.sell} onChange={(e) => handleSell(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required />
                     </div>
                     <div className="my-3">
                         <div className="text-gray-400">Base Amount</div>

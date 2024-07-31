@@ -17,14 +17,14 @@ export default async function handler(req, res) {
     else if (req.method === 'POST') {
         try {
             await prisma.$connect()
-            const { currency, description, min, max, baseAmount } = req.body
+            const { data } = req.body
             await prisma.exchange.create({
                 data: {
-                    currency,
-                    description,
-                    min,
-                    max,
-                    baseAmount
+                    currency: data.currency,
+                    description: data.description,
+                    buy: parseFloat(data.buy),
+                    sell: parseFloat(data.sell),
+                    baseAmount: data.baseAmount
                 },
             })
         } catch (error) {

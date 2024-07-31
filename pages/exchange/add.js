@@ -6,8 +6,8 @@ export default function Add() {
     const [exchange, setExchange] = useState({
         currency: '',
         description: '',
-        min: '',
-        max: '',
+        buy: '',
+        sell: '',
         baseAmount: ''
     })
     const [error, setError] = useState(null)
@@ -37,13 +37,13 @@ export default function Add() {
         setExchange(data)
     }
 
-    const handleMin = val => {
-        const data = {...exchange, min: val}
+    const handleBuy = val => {
+        const data = {...exchange, buy: val}
         setExchange(data)
     }
 
-    const handleMax = val => {
-        const data = {...exchange, max: val}
+    const handleSell = val => {
+        const data = {...exchange, sell: val}
         setExchange(data)
     }
 
@@ -68,12 +68,12 @@ export default function Add() {
                     <input name="description" placeholder="eg., Kyat to Baht" type="text" value={exchange.description} onChange={(e) => handleDescription(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg"/>
                 </div>
                 <div className="my-3">
-                    <div className="text-gray-400">Min</div>
-                    <input name="min" placeholder="eg., 135" type="text" value={exchange.min} onChange={(e) => handleMin(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
+                    <div className="text-gray-400">Buy</div>
+                    <input name="buy" placeholder="eg., 135" type="text" value={exchange.buy} onChange={(e) => handleBuy(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
                 </div>
                 <div className="my-3">
-                    <div className="text-gray-400">Max</div>
-                    <input name="max" placeholder="eg., 138" type="text" value={exchange.max} onChange={(e) => handleMax(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
+                    <div className="text-gray-400">Sell</div>
+                    <input name="sell" placeholder="eg., 138" type="text" value={exchange.sell} onChange={(e) => handleSell(e.target.value)} className="block focus:outline-none bg-transparent p-2 w-full border-[1px] border-gray-500 text-gray-600 rounded-lg" required/>
                 </div>
                 <div className="my-3">
                     <div className="text-gray-400">Base Amount</div>
