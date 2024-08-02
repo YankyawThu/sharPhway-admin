@@ -39,3 +39,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.screen-h {
+  height: calc(100vh - 150px)
+}
