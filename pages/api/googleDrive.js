@@ -70,7 +70,7 @@ export default async function handler(req, res) {
                     // mimeType: file.mimetype,
                     body: fileStream
                 },
-                fields: 'id, thumbnailLink'
+                fields: 'id, webContentLink'
             })
             await drive.permissions.create({
                 fileId: response.data.id,
@@ -79,6 +79,7 @@ export default async function handler(req, res) {
                     type: "anyone",
                 },
             })
+            response.data.webContentLink = response.data.webContentLink.replace('download', 'view')
             fs.unlinkSync(filePath)
             return response.data
         })

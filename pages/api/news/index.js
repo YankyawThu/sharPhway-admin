@@ -22,11 +22,11 @@ export default async function handler(req, res) {
                 data: {
                     title,
                     content,
-                    img1: imgs[0]?.thumbnailLink,
-                    img2: imgs[1]?.thumbnailLink,
-                    img3: imgs[2]?.thumbnailLink,
-                    img4: imgs[3]?.thumbnailLink,
-                    img5: imgs[4]?.thumbnailLink,
+                    img1: imgs[0]?.webContentLink,
+                    img2: imgs[1]?.webContentLink,
+                    img3: imgs[2]?.webContentLink,
+                    img4: imgs[3]?.webContentLink,
+                    img5: imgs[4]?.webContentLink,
                 },
             })
         } catch (error) {
